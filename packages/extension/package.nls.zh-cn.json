@@ -1,0 +1,14 @@
+{
+  "extension.description": "本地优先的代码范式知识库，支持手工笔记与可选的 BYOK AI 增强。",
+  "command.save": "收录此代码范式",
+  "command.web": "打开知识库工作台",
+  "command.scan": "扫描工业级写法",
+  "command.key": "设置或清除 AI API Key",
+  "command.note": "查看笔记",
+  "view.name": "当前文件",
+  "config.database": "SQLite 数据库路径。修改后重新加载窗口生效，原有数据不会自动移动。",
+  "config.enabled": "启用可选 AI 增强。未启用时所有知识库管理功能均可使用。",
+  "config.baseUrl": "API 基础地址，可包含 /v1。仅支持 HTTPS 或本机 HTTP 地址。",
+  "config.model": "服务商提供的模型标识，不会自动选择模型。",
+  "config.protocol": "BYOK API 协议。凭据保存在 VS Code SecretStorage 中。"
+}

@@ -1,0 +1,38 @@
+{
+  "name": "ding-code-workspace",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.28.2",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write \"packages/**/*.{ts,vue,json,css,html,mjs,md}\" \"shared/**/*.ts\" \"scripts/*.{ts,mjs}\" \"tests/*.ts\" \".github/**/*.yml\" \".vscode/*.json\" \"*.{json,md,mjs,yaml}\"",
+    "format:check": "prettier --check \"packages/**/*.{ts,vue,json,css,html,mjs,md}\" \"shared/**/*.ts\" \"scripts/*.{ts,mjs}\" \"tests/*.ts\" \".github/**/*.yml\" \".vscode/*.json\" \"*.{json,md,mjs,yaml}\"",
+    "test:extension": "node scripts/test-extension.mjs",
+    "build": "corepack pnpm --filter @ding-code/web build && corepack pnpm --filter ding-code build",
+    "typecheck": "tsc --noEmit && corepack pnpm --filter @ding-code/web typecheck",
+    "test": "tsx --test tests/*.test.ts",
+    "package": "corepack pnpm build && corepack pnpm --filter ding-code package",
+    "dev": "tsx scripts/dev.ts"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.0",
+    "@types/node": "^22.19.0",
+    "@types/vscode": "^1.100.0",
+    "@types/ws": "^8.18.1",
+    "@vscode/vsce": "^4.1.0",
+    "esbuild": "^0.25.12",
+    "eslint": "9.39.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-vue": "10.5.1",
+    "globals": "16.5.0",
+    "prettier": "3.6.2",
+    "tsx": "^4.20.6",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "8.48.0",
+    "vue-eslint-parser": "10.2.0"
+  }
+}

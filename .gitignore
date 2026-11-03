@@ -1,0 +1,17 @@
+node_modules/
+dist/
+*.vsix
+*.db
+*.db-wal
+*.db-shm
+.dev-data/
+.test-output/
+artifacts/
+.env
+.env.*
+!.env.example
+packages/extension/README.md
+packages/extension/README.zh-CN.md
+packages/extension/LICENSE
+packages/extension/THIRD_PARTY_NOTICES.md
+packages/extension/CHANGELOG.md

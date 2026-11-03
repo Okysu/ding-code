@@ -1,0 +1,160 @@
+{
+  "name": "ding-code",
+  "displayName": "Ding Code",
+  "description": "%extension.description%",
+  "publisher": "ding-code",
+  "version": "0.1.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Okysu/ding-code.git",
+    "directory": "packages/extension"
+  },
+  "homepage": "https://github.com/Okysu/ding-code#readme",
+  "bugs": {
+    "url": "https://github.com/Okysu/ding-code/issues"
+  },
+  "engines": {
+    "vscode": "^1.100.0"
+  },
+  "categories": [
+    "Other",
+    "Education"
+  ],
+  "main": "./dist/extension.cjs",
+  "extensionKind": [
+    "ui"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    },
+    "virtualWorkspaces": false
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "package": "vsce package --no-dependencies --out ../../artifacts/ --baseContentUrl https://github.com/Okysu/ding-code/blob/main --baseImagesUrl https://raw.githubusercontent.com/Okysu/ding-code/main"
+  },
+  "dependencies": {
+    "ws": "^8.18.3",
+    "zod": "^3.25.76"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "ding-code.saveSnippet",
+        "title": "%command.save%",
+        "category": "Ding Code",
+        "icon": "$(bookmark)"
+      },
+      {
+        "command": "ding-code.openWeb",
+        "title": "%command.web%",
+        "category": "Ding Code",
+        "icon": "$(globe)"
+      },
+      {
+        "command": "ding-code.scanFile",
+        "title": "%command.scan%",
+        "category": "Ding Code",
+        "icon": "$(sparkle)"
+      },
+      {
+        "command": "ding-code.setApiKey",
+        "title": "%command.key%",
+        "category": "Ding Code",
+        "icon": "$(key)"
+      },
+      {
+        "command": "ding-code.viewNote",
+        "title": "%command.note%",
+        "category": "Ding Code"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "ding-code.saveSnippet",
+        "key": "ctrl+shift+d",
+        "mac": "cmd+shift+d",
+        "when": "editorTextFocus && editorHasSelection"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "ding-code.saveSnippet",
+          "when": "editorHasSelection",
+          "group": "ding-code@1"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "ding-code.openWeb",
+          "when": "view == ding-code.sidebar",
+          "group": "navigation"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "ding-code",
+          "title": "Ding Code",
+          "icon": "media/ding-code.svg"
+        }
+      ]
+    },
+    "views": {
+      "ding-code": [
+        {
+          "id": "ding-code.sidebar",
+          "name": "%view.name%",
+          "type": "webview"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Ding Code",
+      "properties": {
+        "ding-code.databasePath": {
+          "type": "string",
+          "default": "~/.ding-code/knowledge.db",
+          "scope": "application",
+          "description": "%config.database%"
+        },
+        "ding-code.ai.enabled": {
+          "type": "boolean",
+          "default": false,
+          "scope": "application",
+          "description": "%config.enabled%"
+        },
+        "ding-code.ai.baseUrl": {
+          "type": "string",
+          "default": "https://api.openai.com/v1",
+          "scope": "application",
+          "description": "%config.baseUrl%"
+        },
+        "ding-code.ai.model": {
+          "type": "string",
+          "default": "",
+          "scope": "application",
+          "description": "%config.model%"
+        },
+        "ding-code.ai.protocol": {
+          "type": "string",
+          "enum": [
+            "responses",
+            "chat-completions",
+            "anthropic"
+          ],
+          "default": "responses",
+          "scope": "application",
+          "description": "%config.protocol%"
+        }
+      }
+    }
+  }
+}

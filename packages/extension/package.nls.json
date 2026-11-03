@@ -1,0 +1,14 @@
+{
+  "extension.description": "A local-first code pattern library with notes and optional BYOK AI.",
+  "command.save": "Save Snippet",
+  "command.web": "Open Knowledge Workbench",
+  "command.scan": "Scan Industrial Patterns",
+  "command.key": "Set or Clear AI API Key",
+  "command.note": "View Note",
+  "view.name": "Current File",
+  "config.database": "SQLite database path. Reload the window to apply a path change. Existing data is not moved automatically.",
+  "config.enabled": "Enable optional AI enhancements. All knowledge management features work without AI.",
+  "config.baseUrl": "API base URL, with or without /v1. HTTPS or local HTTP endpoints only.",
+  "config.model": "Your provider's model identifier. No model is selected automatically.",
+  "config.protocol": "BYOK API protocol. Credentials are stored in VS Code SecretStorage."
+}

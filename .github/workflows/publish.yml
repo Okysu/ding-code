@@ -1,0 +1,75 @@
+name: Publish extension
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing release tag, for example v0.1.0'
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-${{ github.event.release.tag_name || inputs.tag }}
+  cancel-in-progress: false
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name || inputs.tag }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.22.0'
+      - run: corepack enable
+      - run: corepack pnpm install --frozen-lockfile
+      - name: Match release tag to extension version
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name || inputs.tag }}
+        run: node -e "const p=require('./packages/extension/package.json'); if(process.env.RELEASE_TAG !== 'v'+p.version) throw new Error('Release tag must match extension version');"
+      - run: corepack pnpm format:check
+      - run: corepack pnpm lint
+      - run: corepack pnpm typecheck
+      - run: corepack pnpm test
+      - run: corepack pnpm package
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-vsix
+          path: artifacts/*.vsix
+          if-no-files-found: error
+      - name: Attach VSIX to the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.event.release.tag_name || inputs.tag }}
+        run: gh release upload "$RELEASE_TAG" artifacts/*.vsix --clobber
+
+  marketplace:
+    needs: package
+    if: vars.MARKETPLACE_PUBLISH == 'true'
+    runs-on: ubuntu-latest
+    environment: marketplace
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name || inputs.tag }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.22.0'
+      - run: corepack enable
+      - run: corepack pnpm install --frozen-lockfile
+      - uses: actions/download-artifact@v4
+        with:
+          name: release-vsix
+          path: artifacts
+      - name: Publish the verified VSIX with OIDC
+        run: corepack pnpm exec vsce publish --packagePath artifacts/*.vsix --oidc

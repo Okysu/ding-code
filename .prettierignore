@@ -1,0 +1,12 @@
+node_modules
+dist
+pnpm-lock.yaml
+.dev-data
+.test-output
+*.vsix
+artifacts
+packages/extension/README.md
+packages/extension/README.zh-CN.md
+packages/extension/LICENSE
+packages/extension/THIRD_PARTY_NOTICES.md
+packages/extension/CHANGELOG.md
